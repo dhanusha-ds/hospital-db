@@ -1,0 +1,358 @@
+-- Creating Hospital Database
+CREATE DATABASE HospitalDB;
+USE HospitalDB;
+
+-- Creating Patients Table
+CREATE TABLE Patients (
+    PatientID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    ContactInfo VARCHAR(100),
+    MedicalHistory TEXT
+);
+
+-- Creating Doctors Table
+CREATE TABLE Doctors (
+    DoctorID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Specialty VARCHAR(100),
+    YearsOfExperience INT
+);
+
+-- Creating Appointments Table
+CREATE TABLE Appointments (
+    AppointmentID INT PRIMARY KEY AUTO_INCREMENT,
+    PatientID INT,
+    DoctorID INT,
+    AppointmentDate DATE,
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+);
+
+-- Creating Medications Table
+CREATE TABLE Medications (
+    MedicationID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Dosage VARCHAR(50)
+);
+
+-- Creating Prescriptions Table
+CREATE TABLE Prescriptions (
+    PrescriptionID INT PRIMARY KEY AUTO_INCREMENT,
+    PatientID INT,
+    DoctorID INT,
+    MedicationID INT,
+    PrescriptionDate DATE,
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID),
+    FOREIGN KEY (MedicationID) REFERENCES Medications(MedicationID)
+);
+
+-- Creating Rooms Table
+CREATE TABLE Rooms (
+    RoomID INT PRIMARY KEY AUTO_INCREMENT,
+    RoomNumber VARCHAR(10),
+    IsAvailable BOOLEAN
+);
+
+-- Creating Nurses Table
+CREATE TABLE Nurses (
+    NurseID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    ShiftTime VARCHAR(50)
+);
+
+-- Creating LabTests Table
+CREATE TABLE LabTests (
+    LabTestID INT PRIMARY KEY AUTO_INCREMENT,
+    PatientID INT,
+    TestName VARCHAR(100),
+    TestDate DATE,
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID)
+);
+
+-- Creating Billing Table
+CREATE TABLE Billing (
+    BillID INT PRIMARY KEY AUTO_INCREMENT,
+    PatientID INT,
+    TotalAmount DECIMAL(10, 2),
+    PaymentStatus VARCHAR(50),
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID)
+);
+
+-- Creating Departments Table
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    HeadOfDepartment VARCHAR(100)
+);
+
+-- Creating Surgeries Table
+CREATE TABLE Surgeries (
+    SurgeryID INT PRIMARY KEY AUTO_INCREMENT,
+    PatientID INT,
+    DoctorID INT,
+    RoomID INT,
+    SurgeryDate DATE,
+    FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID),
+    FOREIGN KEY (RoomID) REFERENCES Rooms(RoomID)
+);
+
+-- Inserting Data into Patients Table
+INSERT INTO Patients (Name, ContactInfo, MedicalHistory)
+VALUES
+('Kumarasamy', '9998887776', 'Diabetes'),
+('Rajasekar', '9998887775', 'Hypertension'),
+('Meenakshi', '9998887774', 'Asthma'),
+('Raghavan', '9998887773', 'Heart Disease'),
+('Lakshmi', '9998887772', 'Arthritis'),
+('Perumal', '9998887771', 'Allergy'),
+('Vijayakumar', '9998887770', 'Diabetes'),
+('Shanthi', '9998887769', 'Migraine'),
+('Murugan', '9998887768', 'Obesity'),
+('Janaki', '9998887767', 'Thyroid Issues');
+
+-- Inserting Data into Doctors Table
+INSERT INTO Doctors (Name, Specialty, YearsOfExperience)
+VALUES
+('Dr. Aravind', 'Cardiologist', 15),
+('Dr. Saravanan', 'Neurologist', 10),
+('Dr. Lakshmanan', 'Orthopedist', 12),
+('Dr. Priya', 'Gynecologist', 8),
+('Dr. Balaji', 'Dermatologist', 6),
+('Dr. Madhavan', 'Pediatrician', 9),
+('Dr. Kavitha', 'Endocrinologist', 11),
+('Dr. Senthil', 'Ophthalmologist', 13),
+('Dr. Rajini', 'ENT Specialist', 7),
+('Dr. Ganesh', 'Psychiatrist', 5);
+
+-- Inserting Data into Appointments Table
+INSERT INTO Appointments (PatientID, DoctorID, AppointmentDate)
+VALUES
+(1, 1, '2024-10-10'),
+(2, 2, '2024-10-11'),
+(3, 3, '2024-10-12'),
+(4, 4, '2024-10-13'),
+(5, 5, '2024-10-14'),
+(6, 6, '2024-10-15'),
+(7, 7, '2024-10-16'),
+(8, 8, '2024-10-17'),
+(9, 9, '2024-10-18'),
+(10, 10, '2024-10-19');
+
+-- Inserting Data into Medications Table
+INSERT INTO Medications (Name, Dosage)
+VALUES
+('Metformin', '500 mg'),
+('Lisinopril', '20 mg'),
+('Albuterol', '90 mcg'),
+('Atorvastatin', '40 mg'),
+('Aspirin', '81 mg'),
+('Cetirizine', '10 mg'),
+('Ibuprofen', '200 mg'),
+('Omeprazole', '20 mg'),
+('Levothyroxine', '100 mcg'),
+('Paracetamol', '500 mg');
+
+-- Inserting Data into Prescriptions Table
+INSERT INTO Prescriptions (PatientID, DoctorID, MedicationID, PrescriptionDate)
+VALUES
+(1, 1, 1, '2024-10-10'),
+(2, 2, 2, '2024-10-11'),
+(3, 3, 3, '2024-10-12'),
+(4, 4, 4, '2024-10-13'),
+(5, 5, 5, '2024-10-14'),
+(6, 6, 6, '2024-10-15'),
+(7, 7, 7, '2024-10-16'),
+(8, 8, 8, '2024-10-17'),
+(9, 9, 9, '2024-10-18'),
+(10, 10, 10, '2024-10-19');
+
+-- Inserting Data into Rooms Table
+INSERT INTO Rooms (RoomNumber, IsAvailable)
+VALUES
+('101', TRUE),
+('102', FALSE),
+('103', TRUE),
+('104', FALSE),
+('105', TRUE),
+('106', TRUE),
+('107', FALSE),
+('108', TRUE),
+('109', FALSE),
+('110', TRUE);
+
+-- Inserting Data into Nurses Table
+INSERT INTO Nurses (Name, ShiftTime)
+VALUES
+('Nurse Revathi', 'Day'),
+('Nurse Jayanthi', 'Night'),
+('Nurse Kamala', 'Day'),
+('Nurse Anandhi', 'Night'),
+('Nurse Nalini', 'Day'),
+('Nurse Shanthi', 'Night'),
+('Nurse Meera', 'Day'),
+('Nurse Latha', 'Night'),
+('Nurse Geetha', 'Day'),
+('Nurse Priyadarshini', 'Night');
+
+-- Inserting Data into LabTests Table
+INSERT INTO LabTests (PatientID, TestName, TestDate)
+VALUES
+(1, 'Blood Sugar', '2024-10-10'),
+(2, 'MRI', '2024-10-11'),
+(3, 'X-ray', '2024-10-12'),
+(4, 'Blood Pressure', '2024-10-13'),
+(5, 'CT Scan', '2024-10-14'),
+(6, 'Thyroid Test', '2024-10-15'),
+(7, 'ECG', '2024-10-16'),
+(8, 'Liver Function Test', '2024-10-17'),
+(9, 'Kidney Function Test', '2024-10-18'),
+(10, 'Cholesterol Test', '2024-10-19');
+
+-- Inserting Data into Billing Table
+INSERT INTO Billing (PatientID, TotalAmount, PaymentStatus)
+VALUES
+(1, 1000.00, 'Paid'),
+(2, 1500.00, 'Pending'),
+(3, 2000.00, 'Paid'),
+(4, 2500.00, 'Pending'),
+(5, 3000.00, 'Paid'),
+(6, 3500.00, 'Pending'),
+(7, 4000.00, 'Paid'),
+(8, 4500.00, 'Pending'),
+(9, 5000.00, 'Paid'),
+(10, 5500.00, 'Pending');
+
+-- Inserting Data into Departments Table
+INSERT INTO Departments (Name, HeadOfDepartment)
+VALUES
+('Cardiology', 'Dr. Aravind'),
+('Neurology', 'Dr. Saravanan'),
+('Orthopedics', 'Dr. Lakshmanan'),
+('Gynecology', 'Dr. Priya'),
+('Dermatology', 'Dr. Balaji'),
+('Pediatrics', 'Dr. Madhavan'),
+('Endocrinology', 'Dr. Kavitha'),
+('Ophthalmology', 'Dr. Senthil'),
+('ENT', 'Dr. Rajini'),
+('Psychiatry', 'Dr. Ganesh');
+
+-- Correcting Data in Surgeries Table
+INSERT INTO Surgeries (PatientID, DoctorID, RoomID, SurgeryDate)
+VALUES
+(1, 1, 1, '2024-10-10'),
+(2, 2, 2, '2024-10-11'),
+(3, 3, 3, '2024-10-12'),
+(4, 4, 4, '2024-10-13'),
+(5, 5, 5, '2024-10-14'),
+(6, 6, 6, '2024-10-15'),
+(7, 7, 7, '2024-10-16'),
+(8, 8, 8, '2024-10-17'),
+(9, 9, 9, '2024-10-18'),
+(10, 10, 10, '2024-10-19');
+
+-- 1. Select all available rooms
+SELECT RoomNumber
+FROM Rooms
+WHERE IsAvailable = TRUE;
+
+-- 2. Select patients prescribed by Dr. Priya, with medication and prescription date
+SELECT P.Name AS PatientName, M.Name AS MedicationName, PR.PrescriptionDate
+FROM Prescriptions PR
+JOIN Patients P ON PR.PatientID = P.PatientID
+JOIN Medications M ON PR.MedicationID = M.MedicationID
+JOIN Doctors D ON PR.DoctorID = D.DoctorID
+WHERE D.Name = 'Dr. Priya';
+
+-- 3. Count total appointments for each doctor
+SELECT D.Name AS DoctorName, COUNT(A.AppointmentID) AS TotalAppointments
+FROM Doctors D
+LEFT JOIN Appointments A ON D.DoctorID = A.DoctorID
+GROUP BY D.DoctorID;
+
+-- 4. Select all medications, doctors, and their respective patients
+SELECT M.Name AS MedicationName, D.Name AS DoctorName, P.Name AS PatientName
+FROM Prescriptions PR
+JOIN Medications M ON PR.MedicationID = M.MedicationID
+JOIN Doctors D ON PR.DoctorID = D.DoctorID
+JOIN Patients P ON PR.PatientID = P.PatientID;
+
+-- 5. Select surgeries performed in room 101, including patient names and surgery dates
+SELECT P.Name AS PatientName, S.SurgeryDate, R.RoomNumber
+FROM Surgeries S
+JOIN Patients P ON S.PatientID = P.PatientID
+JOIN Rooms R ON S.RoomID = R.RoomID
+WHERE R.RoomNumber = '101';
+
+-- 6. Count total patients per department
+SELECT D.Name AS DepartmentName, COUNT(P.PatientID) AS TotalPatients
+FROM Departments D
+LEFT JOIN Doctors DOC ON D.HeadOfDepartment = DOC.Name
+LEFT JOIN Appointments A ON DOC.DoctorID = A.DoctorID
+LEFT JOIN Patients P ON A.PatientID = P.PatientID
+GROUP BY D.DepartmentID;
+
+-- 7. Calculate the total billed amount
+SELECT SUM(TotalAmount) AS TotalBilled
+FROM Billing;
+
+-- 8. Select all departments with their respective heads
+SELECT Name AS DepartmentName, HeadOfDepartment
+FROM Departments;
+
+-- 9. Total billing for each patient
+SELECT P.Name AS PatientName, SUM(B.TotalAmount) AS TotalBilling
+FROM Patients P
+JOIN Billing B ON P.PatientID = B.PatientID
+GROUP BY P.PatientID;
+
+-- 10. Select patients who were prescribed 'Paracetamol'
+SELECT P.Name AS PatientName
+FROM Patients P
+JOIN Prescriptions PR ON P.PatientID = PR.PatientID
+JOIN Medications M ON PR.MedicationID = M.MedicationID
+WHERE M.Name = 'Paracetamol';
+
+-- 11. Count total appointments grouped by month
+SELECT MONTH(AppointmentDate) AS Month, COUNT(AppointmentID) AS TotalAppointments
+FROM Appointments
+GROUP BY MONTH(AppointmentDate);
+
+-- 12. Total billed amount per department
+SELECT D.Name AS DepartmentName, SUM(B.TotalAmount) AS TotalBilled
+FROM Departments D
+JOIN Doctors DOC ON D.HeadOfDepartment = DOC.Name
+JOIN Appointments A ON DOC.DoctorID = A.DoctorID
+JOIN Billing B ON A.PatientID = B.PatientID
+GROUP BY D.DepartmentID;
+
+-- 13. Select doctors with less than 2 years of experience
+SELECT Name AS DoctorName, YearsOfExperience
+FROM Doctors
+WHERE YearsOfExperience < 2;
+
+-- 14. Describing the tables
+DESCRIBE Patients;
+DESCRIBE Doctors;
+DESCRIBE Appointments;
+DESCRIBE Medications;
+DESCRIBE Prescriptions;
+DESCRIBE Rooms;
+DESCRIBE LabTests;
+DESCRIBE Billing;
+DESCRIBE Departments;
+DESCRIBE Surgeries;
+
+-- 15. Select all records from tables
+SELECT * FROM Patients;
+SELECT * FROM Doctors;
+SELECT * FROM Appointments;
+SELECT * FROM Medications;
+SELECT * FROM Prescriptions;
+SELECT * FROM Rooms;
+SELECT * FROM Nurses;
+SELECT * FROM LabTests;
+SELECT * FROM Billing;
+SELECT * FROM Departments;
+SELECT * FROM Surgeries;
