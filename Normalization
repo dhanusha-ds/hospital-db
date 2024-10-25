@@ -1,0 +1,21 @@
+1. First Normal Form (1NF):
+•	Each column contains atomic values: There are no repeating groups or arrays in any table. For example, patient details are stored in separate columns.
+•	All entries in columns are of the same type: No mixed data types exist in any column.
+The hospital database is in 1NF.
+
+
+2. Second Normal Form (2NF):
+•	It is already in 1NF: As explained above, the database is in 1NF.
+•	No partial dependency: Each table has a primary key, and all non-key attributes depend fully on the primary key. There are no composite keys, so partial dependency doesn't apply here.
+The hospital database is in 2NF.
+
+
+3. Third Normal Form (3NF):
+•	It is in 2NF: We already established that the database is in 2NF.
+•	No transitive dependency: There are no attributes in any table that depend on non-primary key columns. For example, in the Patients table, columns like Name and ContactInfo depend only on PatientID. Similarly, all other tables follow this rule.
+The hospital database is in 3NF.
+
+
+Conclusion
+The hospital database is in Third Normal Form (3NF). It is well-structured, with no partial or transitive dependencies, ensuring minimal redundancy and maintaining data integrity.
+
